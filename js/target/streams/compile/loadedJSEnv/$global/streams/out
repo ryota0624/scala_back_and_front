@@ -1,0 +1,13 @@
+[debug] Generating LinkingUnit for JSEnv RhinoJSEnv
+[debug] Linker: Compute reachability: 384484 us
+[debug] Linker: Assemble LinkedClasses: 1461573 us
+[debug] Basic Linking: 1932442 us
+[debug] Inc. optimizer: Batch mode: true
+[debug] Inc. optimizer: Incremental part: 562711 us
+[debug] Inc. optimizer: Optimizing 875 methods.
+[debug] Inc. optimizer: Optimizer part: 1657515 us
+[debug] Inc. optimizer: 2261003 us
+[debug] Refiner: Compute reachability: 127103 us
+[debug] Refiner: Assemble LinkedClasses: 47985 us
+[debug] Refiner: 181267 us
+[debug] Loading JSEnv with LinkingUnit
