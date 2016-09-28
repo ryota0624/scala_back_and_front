@@ -7,11 +7,15 @@ import domain.Repository.TopicRepository
   * Created by ryota on 2016/08/14.
   */
 class TopicRepositoryOnMemory extends TopicRepository {
-  override def store(topic: Topic): Option[Unit] = {
+  def store(topic: Topic): Option[Unit] = {
     TopicRepositoryOnMemory.set(topic)
     Some(Unit)
   }
 
+  def remove(topic: Topic): Option[Unit] = {
+    TopicRepositoryOnMemory.remove(topic)
+    Some(Unit)
+  }
   override def update(topic: Topic): Option[Unit] = {
     TopicRepositoryOnMemory.set(topic)
     Some(Unit)
@@ -30,6 +34,10 @@ object TopicRepositoryOnMemory {
   var store: Map[TopicId, Topic] = Map()
   def set(topic: Topic): Unit = {
     store = store.updated(topic.id, topic)
+  }
+
+  def remove(topic: Topic): Unit = {
+    store = store - topic.id
   }
 
   def getById(topicId: TopicId): Option[Topic] = {

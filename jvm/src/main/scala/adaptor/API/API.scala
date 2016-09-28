@@ -1,15 +1,26 @@
 package adaptor.API
-
 import adaptor.API.routing.topicRouting
+import adaptor.controller.{TopicIdRequest, TopicNameRequest}
+import adaptor.presenter.json.TopicListDtos
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.stream.ActorMaterializer
+import spray.json.DefaultJsonProtocol
 
 import scala.io.StdIn
 
 /**
   * Created by ryota on 2016/08/14.
   */
+trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
+  import adaptor.Dtos.TopicDto
+  implicit val topicFormat = jsonFormat2(TopicDto)
+  implicit val topicsFormat = jsonFormat1(TopicListDtos)
+  implicit val registerTopicRequest = jsonFormat1(TopicNameRequest)
+  implicit val deleteTopicRequest = jsonFormat1(TopicIdRequest)
+}
+
 object API {
   def run() = {
     implicit val system = ActorSystem("api")

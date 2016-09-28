@@ -10,5 +10,5 @@ trait TopicRepository {
   def findAll(): Option[List[Topic]]
   def store(topic: Topic): Option[Unit]
   def update(topic: Topic): Option[Unit]
-
+  def remove(topic: Topic): Option[Unit]
 }
