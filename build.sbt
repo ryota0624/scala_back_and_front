@@ -22,11 +22,13 @@ lazy val board = crossProject.in(file(".")).
       "org.scalikejdbc" %% "scalikejdbc" % "2.4.2",
       "com.h2database" % "h2" % "1.4.192",
       "mysql" % "mysql-connector-java" % "5.1.29",
-      "ch.qos.logback" % "logback-classic" % "1.1.7"
+      "ch.qos.logback" % "logback-classic" % "1.1.7",
+      "fr.hmil" %%% "roshttp" % "2.0.0-RC1"
     )
   ).jsSettings(
-    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided"
-  )
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
+    libraryDependencies += "fr.hmil" %%% "roshttp" % "2.0.0-RC1"
+)
 
 
 lazy val boardJVM = board.jvm

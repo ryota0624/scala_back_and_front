@@ -8,9 +8,11 @@ import usecase.helpers.Usecase
 /**
   * Created by ryota on 2016/08/14.
   */
-class RegistPostUsecase(topicRepository: TopicRepository, postRepository: PostRepository)
-  extends Usecase[RegistPostUsecase.Input, RegistPostUsecase.Output] {
-  def call(input: RegistPostUsecase.Input): RegistPostUsecase.Output = {
+trait RegisterPostUsecase
+  extends Usecase[RegisterPostUsecase.Input, RegisterPostUsecase.Output] {
+  val topicRepository: TopicRepository
+  val postRepository: PostRepository
+  def call(input: RegisterPostUsecase.Input): RegisterPostUsecase.Output = {
     input match {
       case (topicId: Int, postText: String) => topicRepository.findTopicId(TopicId(topicId))
         .map((targetTopic) => {
@@ -24,7 +26,16 @@ class RegistPostUsecase(topicRepository: TopicRepository, postRepository: PostRe
   }
 }
 
-object RegistPostUsecase {
+object RegisterPostUsecase {
   type Input = (Int, String)
   type Output = Option[Topic]
+}
+
+trait UsesRegisterPostUsecase {
+  val topicRepository: TopicRepository
+  val postRepository: PostRepository
+  val registerPostUsecase: RegisterPostUsecase = new RegisterPostUsecase {
+    val topicRepository: TopicRepository = topicRepository
+    val postRepository: PostRepository = postRepository
+  }
 }

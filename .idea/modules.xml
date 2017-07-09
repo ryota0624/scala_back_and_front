@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/board-sources.iml" filepath="$PROJECT_DIR$/.idea/modules/board-sources.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boardJS.iml" filepath="$PROJECT_DIR$/.idea/modules/boardJS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boardJS-build.iml" filepath="$PROJECT_DIR$/.idea/modules/boardJS-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boardJVM.iml" filepath="$PROJECT_DIR$/.idea/modules/boardJVM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boardJVM-build.iml" filepath="$PROJECT_DIR$/.idea/modules/boardJVM-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/root.iml" filepath="$PROJECT_DIR$/.idea/modules/root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/root-build.iml" filepath="$PROJECT_DIR$/.idea/modules/root-build.iml" />
+    </modules>
+  </component>
+</project>

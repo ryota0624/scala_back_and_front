@@ -40,3 +40,7 @@ object PostRepositoryOnMemory {
     store.get(postId)
   }
 }
+
+trait UsesPostRepository {
+  val postRepository: PostRepository = new PostRepositoryOnMemory
+}

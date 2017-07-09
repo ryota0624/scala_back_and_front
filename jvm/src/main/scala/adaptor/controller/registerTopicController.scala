@@ -6,6 +6,10 @@ import akka.http.scaladsl.server.StandardRoute
 import akka.http.scaladsl.server.directives.MarshallingDirectives
 import usecase.command.Topic.RegisterTopicUseCase
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent._
+import scala.concurrent.duration.Duration
+
 /**
   * Created by ryota on 2016/09/28.
   */
@@ -19,9 +23,8 @@ object registerTopicController
     val usecase = new RegisterTopicUseCase(repo)
     val presenter = new RegisterTopicPresenterImplJson
 
-    excute(usecase, request.name) match {
-      case Some(topic) => presenter.show(topic) //presenter.show(list)
-      case None => presenter.fail(new Error("some Error"))
-    }
+    val result = excute(usecase, request.name).map(res => presenter.show(res))
+    Await.result(result, Duration.Inf).asInstanceOf[StandardRoute]
+
   }
 }

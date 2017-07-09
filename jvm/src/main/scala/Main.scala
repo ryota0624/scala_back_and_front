@@ -3,35 +3,37 @@
   */
 
 import adaptor.API.API
-import adaptor.repositoryImpl.onMemory.{PostRepositoryOnMemory, TopicRepositoryOnMemory}
-import usecase.command.Comment.RegisterCommentUsecase
-import usecase.command.Post.RegistPostUsecase
-import usecase.command.Topic.RegisterTopicUseCase
-import usecase.query.Topic.GetAllTopicUsecase
+import adaptor.repositoryImpl.onMemory.{UsesPostRepository, UsesTopicRepository}
+import usecase.command.Comment.UsesRegisterCommentUsecase
+import usecase.command.Post.UsesRegisterPostUsecase
+import usecase.command.Topic.UsesRegisterTopicUseCase
+import usecase.query.Topic.UsesGetAllTopicUsecase
 
-object Main {
-  def main(args: Array[String]): Unit = {
+object Main
+  extends UsesRegisterPostUsecase
+    with UsesRegisterTopicUseCase
+    with UsesGetAllTopicUsecase
+    with UsesRegisterCommentUsecase
+    with UsesTopicRepository
+    with UsesPostRepository {
 
-    val topicRepo = new TopicRepositoryOnMemory
-    val postRepo = new PostRepositoryOnMemory
+  def sampleRun(): Unit = {
 
-    val useCase = new RegisterTopicUseCase(topicRepo)
-    useCase.call("fire")
 
-    val useCase2 = new GetAllTopicUsecase(topicRepo)
-    val topic = useCase2.call()
+    registerTopicUseCase.call("file")
+
+    val topic = getAllTopicUsecase.call()
     println(topic)
 
-    val res = useCase.andThen(useCase2).call(("fire1", Nil))
+    val res = registerTopicUseCase.andThen(getAllTopicUsecase).call(("fire1", Nil))
     println(res)
 
-    topicRepo.findAll().flatMap(topicList => {
+    topicRepository.findAll().flatMap(topicList => {
       val headTopic = topicList.head
-      val registPostUsecase = new RegistPostUsecase(topicRepo, postRepo)
-      registPostUsecase.call(headTopic.id.value, "hoge")
-      registPostUsecase.call(headTopic.id.value, "hoge2")
+      registerPostUsecase.call(headTopic.id.value, "hoge")
+      registerPostUsecase.call(headTopic.id.value, "hoge2")
 
-      postRepo.findPostListByTopicId(headTopic.id)
+      postRepository.findPostListByTopicId(headTopic.id)
 
     }).map(postList => {
       postList.foreach(post => {
@@ -40,19 +42,21 @@ object Main {
       })
       postList.head
     }).map(post => {
-      val registerCommentUsecase = new RegisterCommentUsecase(postRepo)
       registerCommentUsecase.call(post.id.value, "comment!")
-      postRepo.findPostById(post.id)
+      postRepository.findPostById(post.id)
       //.map(post => post.commentList)
     }).map({
-      case Some(post) => {
+      case Some(post) =>
         println(post.id, post.text)
         post.commentList.value.foreach(comment => println(comment.text))
         Some(0)
-      }
+
       case None => None
     })
 
+  }
+
+  def main(args: Array[String]): Unit = {
     API.run()
   }
 }

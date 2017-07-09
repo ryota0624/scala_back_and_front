@@ -2,14 +2,16 @@ package adaptor.repositoryImpl.onMemory
 
 import domain.Entity.Topic.{Topic, TopicId}
 import domain.Repository.TopicRepository
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
 
 /**
   * Created by ryota on 2016/08/14.
   */
 class TopicRepositoryOnMemory extends TopicRepository {
-  def store(topic: Topic): Option[Unit] = {
+  def store(topic: Topic): Future[Unit] = Future {
     TopicRepositoryOnMemory.set(topic)
-    Some(Unit)
   }
 
   def remove(topic: Topic): Option[Unit] = {
@@ -43,4 +45,8 @@ object TopicRepositoryOnMemory {
   def getById(topicId: TopicId): Option[Topic] = {
     store.get(topicId)
   }
+}
+
+trait UsesTopicRepository {
+  val topicRepository: TopicRepository = new TopicRepositoryOnMemory
 }

@@ -7,7 +7,11 @@ import akka.http.scaladsl.server.Directives._
   */
 object topicRouting extends JsonSupport {
   def route() =
-    pathSingleSlash {
+   pathSingleSlash {
+     getFromFile("public/index.html")
+   } ~ path("js") {
+     getFromFile("js/target/scala-2.11/board-fastopt.js")
+   } ~ path("topic") {
       get {
         getAllTopicController.call()
       } ~ post {

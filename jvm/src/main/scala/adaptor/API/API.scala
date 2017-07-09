@@ -29,7 +29,7 @@ object API {
 
 
     val interface = "localhost"
-    val port = 8080
+    val port = 9000
     val binding = Http().bindAndHandle(topicRouting.route(), interface, port)
 
     binding.onFailure {
@@ -37,7 +37,7 @@ object API {
         println(err, s"Failed to bind to $interface $port")
     }
 
-    println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+    println(s"Server online at http://localhost:9000/\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return
     binding
       .flatMap(_.unbind()) // trigger unbinding from the port
